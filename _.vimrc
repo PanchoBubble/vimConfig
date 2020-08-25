@@ -31,7 +31,8 @@ set updatetime=50
 set shortmess+=c
 
 set colorcolumn=80
-highlight ColorColumn ctermbg=0 guibg=lightgrey
+
+
 
 function! BuildYCM(info)
   " info is a dictionary with 3 fields
@@ -56,11 +57,15 @@ Plug '/home/mpaulson/personal/vim-be-good'
 Plug 'preservim/nerdtree'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
+" Clone repo and python3 install.py --all
 Plug 'Valloric/YouCompleteMe'
 Plug 'mjbrownie/YouCompleteMe', { 'do': function('BuildYCM') }
 
+" Install silver search for this
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+
+Plug 'alvan/vim-closetag'
 call plug#end()
 
 set background=dark
@@ -78,10 +83,17 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 "Search in dir for cursor word
-map <leader>f :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
+map <leader>f :execute "Ag" expand("<cword>") <CR>
 set wildignore+=**/node_modules/**,**/dist/**,**/*sql*/**
 
 
 "Remove all trailing whitespace
 nmap <leader>c :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 nmap <leader>n :NERDTreeToggle<CR>
+
+let NERDTreeShowHidden=1
+
+autocmd BufNewFile *.html 0r ~/.vim/templates/html.skel
+
+
+highlight ColorColumn ctermbg=125* guibg=LightMagenta
