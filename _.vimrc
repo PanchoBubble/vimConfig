@@ -65,13 +65,18 @@ Plug 'mjbrownie/YouCompleteMe', { 'do': function('BuildYCM') }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
+" HTML CLOSE TAG
 Plug 'alvan/vim-closetag'
+
+" CSS HEX color visualizer
+Plug 'https://github.com/etdev/vim-hexcolor.git'
 call plug#end()
 
 set background=dark
 colorscheme gruvbox
 
 let g:NERDTreeWinPos = "right"
+let g:NERDTreeWinSize=40
 set completeopt-=preview
 
 nnoremap <silent><c-s> :<c-u>update<cr>
@@ -89,7 +94,17 @@ set wildignore+=**/node_modules/**,**/dist/**,**/*sql*/**
 
 "Remove all trailing whitespace
 nmap <leader>c :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
-nmap <leader>n :NERDTreeToggle<CR>
+
+"Tree toggle off or open with current file location
+function MyNerdToggle()
+    if &filetype == 'nerdtree'
+        :NERDTreeToggle
+    else
+        :NERDTreeFind
+    endif
+endfunction
+"nmap <leader>n :NERDTreeToggle<CR>
+nmap <leader>n :call MyNerdToggle()<CR>
 
 let NERDTreeShowHidden=1
 
@@ -97,3 +112,30 @@ autocmd BufNewFile *.html 0r ~/.vim/templates/html.skel
 
 
 highlight ColorColumn ctermbg=125* guibg=LightMagenta
+
+"""""""""""""""""""""""""""""""""""""""
+""""""" Show unsaved changes """"""""""
+function! s:DiffWithSaved()
+  let filetype=&ft
+  diffthis
+  vnew | r # | normal! 1Gdd
+  diffthis
+  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+com! DiffSaved call s:DiffWithSaved()
+
+map <leader>r :DiffSaved <CR>
+"""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""
+"""""""" GO TO PREV FILE """"""""""""""
+nmap <leader>bb <C-^><cr>
+"""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""
+" move selected lines up one line
+xnoremap <S-UP>  :m-2<CR>gv=gv
+
+" move selected lines down one line
+xnoremap <S-DOWN> :m'>+<CR>gv=gv
+"""""""""""""""""""""""""""""""""""""""
