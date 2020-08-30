@@ -70,6 +70,12 @@ Plug 'alvan/vim-closetag'
 
 " CSS HEX color visualizer
 Plug 'https://github.com/etdev/vim-hexcolor.git'
+
+" React snippets
+Plug 'epilande/vim-react-snippets'
+
+" Ultisnips
+Plug 'SirVer/ultisnips'
 call plug#end()
 
 set background=dark
