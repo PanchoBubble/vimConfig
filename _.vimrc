@@ -73,9 +73,14 @@ Plug 'https://github.com/etdev/vim-hexcolor.git'
 
 " React snippets
 Plug 'epilande/vim-react-snippets'
+Plug 'cristianoliveira/vim-react-html-snippets'
+
 
 " Ultisnips
 Plug 'SirVer/ultisnips'
+
+" HTML Bootstrap
+Plug 'jvanja/vim-bootstrap4-snippets'
 call plug#end()
 
 set background=dark
