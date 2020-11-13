@@ -32,21 +32,20 @@ set shortmess+=c
 
 set colorcolumn=80
 
-
-
-function! BuildYCM(info)
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-  if a:info.status == 'installed' || a:info.force
-    !./install.py
-  endif
-endfunction
+"function! BuildYCM(info)
+"  " info is a dictionary with 3 fields
+"  " - name:   name of the plugin
+"  " - status: 'installed', 'updated', or 'unchanged'
+"  " - force:  set on PlugInstall! or PlugUpdate!
+"  if a:info.status == 'installed' || a:info.force
+"    !./install.py
+"  endif
+"endfunction
 
 call plug#begin('~/.vim/plugged')
 Plug 'mbbill/undotree'
 Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-fugitive'
 
 Plug 'morhetz/gruvbox'
 Plug 'sainnhe/gruvbox-material'
@@ -57,30 +56,17 @@ Plug '/home/mpaulson/personal/vim-be-good'
 Plug 'preservim/nerdtree'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
+" Auto close
+Plug 'jiangmiao/auto-pairs'
+
 " Clone repo and python3 install.py --all
 Plug 'Valloric/YouCompleteMe'
-Plug 'mjbrownie/YouCompleteMe', { 'do': function('BuildYCM') }
+" Plug 'mjbrownie/YouCompleteMe', { 'do': function('BuildYCM') }
 
 " Install silver search for this
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-
-" HTML CLOSE TAG
-Plug 'alvan/vim-closetag'
-
-" CSS HEX color visualizer
-Plug 'https://github.com/etdev/vim-hexcolor.git'
-
-" React snippets
-Plug 'epilande/vim-react-snippets'
-Plug 'cristianoliveira/vim-react-html-snippets'
-
-
-" Ultisnips
-Plug 'SirVer/ultisnips'
-
-" HTML Bootstrap
-Plug 'jvanja/vim-bootstrap4-snippets'
+Plug 'stsewd/fzf-checkout.vim'
 call plug#end()
 
 set background=dark
@@ -150,3 +136,12 @@ xnoremap <S-UP>  :m-2<CR>gv=gv
 " move selected lines down one line
 xnoremap <S-DOWN> :m'>+<CR>gv=gv
 """""""""""""""""""""""""""""""""""""""
+""""""""GIT DIFF STUFF"""""""""""""""""
+nmap <leader>gs :G<CR>
+nmap <leader>gj :G<CR>
+nmap <leader>gf :G<CR>
+nmap <leader>gc :GCheckout<CR>
+"""""""""""""""""""""""""""""""""""""""
+
+let g:fzf_layout = { 'window': {'width': 0.8, 'height': 0.8} }
+let $FZF_DEFAULT_OPTS = '--reverse'
